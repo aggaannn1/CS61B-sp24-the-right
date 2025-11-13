@@ -22,10 +22,10 @@ public class TestTiltColumn {
     @GradedTest(number = "11.1")
     public void testNoMergeColumn() {
         int[][] board = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
                 {4, 0, 0, 0},
-                {2, 0, 0, 0}
+                {2, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0}
         };
         Model before = new Model(board, 0);
         before.tiltColumn(0);

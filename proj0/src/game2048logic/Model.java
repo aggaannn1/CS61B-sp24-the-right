@@ -85,6 +85,17 @@ public class Model {
      * */
     public boolean emptySpaceExists() {
         // TODO: Task 2. Fill in this function.
+        int size= board.size();
+        for(int i=0;i<size;i++)
+        {
+            for(int j=0;j<size;j++)
+            {
+                if(board.tile(i,j)==null)
+                {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -95,6 +106,20 @@ public class Model {
      */
     public boolean maxTileExists() {
         // TODO: Task 3. Fill in this function.
+        int size= board.size();
+        for(int i=0;i<size;i++)
+        {
+            for(int j=0;j<size;j++)
+            {
+                Tile k=board.tile(i,j);
+                if(k!=null) {
+                    int x = k.value();
+                    if (x == MAX_PIECE) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -106,6 +131,52 @@ public class Model {
      */
     public boolean atLeastOneMoveExists() {
         // TODO: Fill in this function.
+        if(emptySpaceExists()==true)
+        {
+            return true;
+        }
+        int k= board.size();;
+        Tile m,n;
+        for(int i=0;i<k;i++)
+        {
+            for(int j=0;j<k;j++)
+            {
+                m=board.tile(i,j);
+                if(i>0)
+                {
+                    n=board.tile(i-1,j);
+                    if (m.value()==n.value())
+                    {
+                        return true;
+                    }
+                }
+                m=board.tile(i,j);
+                if(i<k-1)
+                {
+                    n=board.tile(i+1,j);
+                    if (m.value()==n.value())
+                    {
+                        return true;
+                    }
+                }
+                if(j>0)
+                {
+                    n=board.tile(i,j-1);
+                    if (m.value()==n.value())
+                    {
+                        return true;
+                    }
+                }
+                if(j<k-1)
+                {
+                    n=board.tile(i,j+1);
+                    if (m.value()==n.value())
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -127,8 +198,43 @@ public class Model {
         Tile currTile = board.tile(x, y);
         int myValue = currTile.value();
         int targetY = y;
-
         // TODO: Tasks 5, 6, and 10. Fill in this function.
+        int k= board.size();
+        while(y<k-1&&board.tile(x,y+1)==null)
+        {
+            y++;
+        }
+        if(targetY==y)
+        {
+            if(y==k-1)
+            {
+                return;
+            } else if (currTile.wasMerged()==true||board.tile(x,y+1).wasMerged()==true) {
+                return;
+            } else if (currTile.wasMerged()==false&&myValue==board.tile(x,y+1).value()) {
+                board.move(x,y+1,currTile);
+                score=score+2*myValue;
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            if (y==k-1)
+            {
+                board.move(x,y,currTile);
+            } else if (currTile.wasMerged()==true||board.tile(x,y+1).wasMerged()==true) {
+                board.move(x,y,currTile);
+            } else if (currTile.wasMerged()==false&&myValue==board.tile(x,y+1).value()) {
+                board.move(x,y+1,currTile);
+                score=score+2*myValue;
+            }else {
+                board.move(x,y,currTile);
+            }
+        }
+
     }
 
     /** Handles the movements of the tilt in column x of the board
@@ -138,10 +244,34 @@ public class Model {
      * */
     public void tiltColumn(int x) {
         // TODO: Task 7. Fill in this function.
+        int k= board.size();;
+        for(int i=k-1;i>=0;i--)
+        {
+            if(board.tile(x,i)!=null)
+            {
+                moveTileUpAsFarAsPossible(x,i);
+            }
+        }
     }
 
     public void tilt(Side side) {
         // TODO: Tasks 8 and 9. Fill in this function.
+        int k = board.size();
+        if(side!=Side.NORTH)
+        {
+            board.setViewingPerspective(side);
+            for(int i=0;i<=k-1;i++)
+            {
+                tiltColumn(i);
+            }
+            board.setViewingPerspective(Side.NORTH);
+        } else {
+            for(int i=0;i<=k-1;i++)
+            {
+                tiltColumn(i);
+            }
+        }
+
     }
 
     /** Tilts every column of the board toward SIDE.

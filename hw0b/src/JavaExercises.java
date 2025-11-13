@@ -1,12 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class JavaExercises {
 
     /** Returns an array [1, 2, 3, 4, 5, 6] */
     public static int[] makeDice() {
         // TODO: Fill in this function.
-        return null;
+        int[] a=new int []{1,2,3,4,5,6};
+
+        return a;
     }
 
     /** Returns the order depending on the customer.
@@ -15,14 +18,50 @@ public class JavaExercises {
      *  In any other case, return an empty String[] of size 3. */
     public static String[] takeOrder(String customer) {
         // TODO: Fill in this function.
-        return null;
+        String[] arr1={"beyti", "pizza", "hamburger", "tea"};
+        String[] arr2={"sushi", "pasta", "avocado", "coffee"};
+        if(customer =="Ergun")
+        {
+            return arr1;
+        }
+        else if(customer=="Erik")
+        {
+            return arr2;
+        }
+        String[] arr3=new String[3];
+        return arr3;
     }
 
     /** Returns the positive difference between the maximum element and minimum element of the given array.
      *  Assumes array is nonempty. */
     public static int findMinMax(int[] array) {
         // TODO: Fill in this function.
-        return 0;
+        int  a=array[0];
+        int b=array[0];
+        int c;
+        for(int i:array)
+        {
+            if(a>i)
+            {
+                a=i;
+            }
+        }
+        for(int i:array)
+        {
+            if(b<i)
+            {
+                b=i;
+            }
+        }
+        c=a-b;
+        if(c>=0)
+        {
+            return c;
+        }
+        else
+        {
+            return -c;
+        }
     }
 
     /**
@@ -39,7 +78,21 @@ public class JavaExercises {
 
     private static List<Integer> hailstoneHelper(int x, List<Integer> list) {
         // TODO: Fill in this function.
-        return null;
+        if(x==1)
+        {
+            boolean a= list.add(1);
+            return list;
+        }
+        else if (x%2==0)
+        {
+            boolean a= list.add(x);
+            return hailstoneHelper(x/2,list);
+        }
+        else
+        {
+            boolean a= list.add(x);
+            return hailstoneHelper(x*3+1,list);
+        }
     }
 
 }
