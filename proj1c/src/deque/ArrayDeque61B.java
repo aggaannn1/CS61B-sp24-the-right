@@ -7,14 +7,16 @@ import java.lang.Math;
 public class ArrayDeque61B<T> implements Deque61B{
 
     Object[] items = null;
-    int nextfirst;
-    int nextlast;
+    int nextfirst = 4;
+    int nextlast = 5;
     int size = 0;
     int capacity = 8;
     public ArrayDeque61B() {
         this.items = (T[]) new Object[capacity];
-        this.nextfirst = 4;
-        this.nextlast = 5;
+    }
+    public ArrayDeque61B(int a) {
+        this.capacity = a;
+        this.items = (T[]) new Object[capacity];
     }
     @Override
     public void addFirst(Object x) {
@@ -83,8 +85,8 @@ public class ArrayDeque61B<T> implements Deque61B{
 
     @Override
     public Object removeFirst() {
-        if(size<0.25*capacity) {
-            Object[] items1 = (T[]) new Object[size/3];
+        if(size<0.25*capacity&&capacity>15) {
+            Object[] items1 = (T[]) new Object[capacity/3];
             for(int i = 1;i <= size;i++)
             {
                 items1[i] = get(i);
@@ -92,6 +94,7 @@ public class ArrayDeque61B<T> implements Deque61B{
             nextfirst = 0;
             nextlast = size+1;
             items = items1;
+            capacity = capacity/3;
         }
         nextfirst = Math.floorMod(++nextfirst,capacity);
         items[nextfirst] = 0;
@@ -101,8 +104,8 @@ public class ArrayDeque61B<T> implements Deque61B{
 
     @Override
     public Object removeLast() {
-        if(size<0.25*capacity) {
-            Object[] items1 = (T[]) new Object[size/3];
+        if(size<0.25*capacity&&capacity>15) {
+            Object[] items1 = (T[]) new Object[capacity/3];
             for(int i = 1;i <= size;i++)
             {
                 items1[i] = get(i);
@@ -110,6 +113,7 @@ public class ArrayDeque61B<T> implements Deque61B{
             nextfirst = 0;
             nextlast = size+1;
             items = items1;
+            capacity = capacity/3;
         }
         nextlast = Math.floorMod(--nextlast,capacity);
         items[nextlast] = 0;
