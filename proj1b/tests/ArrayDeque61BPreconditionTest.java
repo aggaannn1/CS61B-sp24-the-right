@@ -29,7 +29,7 @@ public class ArrayDeque61BPreconditionTest {
         all1.addFirst(5);
         all1.addFirst(6);
         all1.addFirst(7);
-        assertThat(all1.toList()).containsExactly(7,5,4,3,2,1);
+        assertThat(all1.toList()).containsExactly(7,6,5,4,3,2,1);
     }
     @Test
     void addLastTest() {
