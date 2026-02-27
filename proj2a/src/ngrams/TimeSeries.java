@@ -1,5 +1,6 @@
 package ngrams;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -30,7 +31,11 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
-        // TODO: Fill in this constructor.
+        for (int i = startYear;i <= endYear;i++) {
+            if (ts.containsKey(i)) {
+                put(i,ts.get(i));
+            }
+        }
     }
 
     /**
@@ -38,7 +43,14 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Integer> years() {
         // TODO: Fill in this method.
-        return null;
+        List<Integer> li = new ArrayList<>();
+        for (int i = MIN_YEAR;i <= MAX_YEAR;i++ ) {
+            if(containsKey(i)) {
+                li.add(i);
+            }
+        }
+
+        return li;
     }
 
     /**
@@ -47,7 +59,13 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public List<Double> data() {
         // TODO: Fill in this method.
-        return null;
+        List<Double> li = new ArrayList<>();
+        for (int i = MIN_YEAR;i <= MAX_YEAR;i++ ) {
+            if(containsKey(i)) {
+                li.add(get(i));
+            }
+        }
+        return li;
     }
 
     /**
@@ -61,7 +79,17 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries plus(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries un = new TimeSeries();
+        for (int i = MIN_YEAR;i <= MAX_YEAR;i++) {
+            if (containsKey(i)&& ts.containsKey(i)) {
+                un.put(i,get(i) + ts.get(i));
+            } else if (containsKey(i) && !ts.containsKey(i)) {
+                un.put(i,get(i));
+            } else if (!containsKey(i) && ts.containsKey(i)) {
+                un.put(i, ts.get(i));
+            }
+        }
+        return un;
     }
 
     /**
@@ -75,7 +103,15 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries dividedBy(TimeSeries ts) {
         // TODO: Fill in this method.
-        return null;
+        TimeSeries un = new TimeSeries();
+        for (int i = MIN_YEAR;i <= MAX_YEAR;i++) {
+            if (containsKey(i)&& ts.containsKey(i)) {
+                un.put(i,get(i) / ts.get(i));
+            } else if (containsKey(i) && !ts.containsKey(i)) {
+                throw new IllegalArgumentException("缺失");
+            }
+        }
+        return un;
     }
 
     // TODO: Add any private helper methods.
